@@ -1,0 +1,7 @@
+LCG: 2.63551e-008
+Park-Miller: 2.24775e-005
+Mersenne twister: 0.548814
+
+LCG period length 113829760
+Park-Miller period length 2147483646
+Mersenne twister period longer than the maximum integer value 4294967295
