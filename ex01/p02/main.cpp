@@ -11,12 +11,12 @@ int main(int argc, char *argv[])
 		try {
 			seed = std::stoi(argv[1]);
 		} catch (std::invalid_argument e) {
-			std::cerr << "Invalid seed given." << std::endl;
+			std::clog << "Invalid seed given." << std::endl;
 		}
 	} else {
-		std::cerr << "No seed given." << std::endl;
+		std::clog << "No seed given." << std::endl;
 	}
-	std::cerr << "Using seed " << seed << std::endl;
+	std::clog << "Using seed " << seed << std::endl;
 
 	Buffon buffon(2.0, 10.0);
 	buffon.seed(seed);
