@@ -8,6 +8,7 @@ public:
 	virtual void seed(std::uint_fast32_t seed) = 0;
 	virtual bool has_seed(std::uint_fast32_t seed) = 0;
 	double rand();
+	double rand(double range_min, double range_max);
 private:
 	virtual std::uint_fast32_t rand_int() = 0;
 	static constexpr double inv_max {1.0 / (max - min)};
@@ -17,6 +18,12 @@ template <std::uint_fast32_t min, std::uint_fast32_t max>
 inline double RNG<min, max>::rand()
 {
 	return (rand_int() - min) * inv_max;
+}
+
+template <std::uint_fast32_t min, std::uint_fast32_t max>
+double RNG<min, max>::rand(double range_min, double range_max)
+{
+	return range_min + (range_max - range_min) * rand();
 }
 
 #endif
