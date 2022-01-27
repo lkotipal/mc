@@ -11,24 +11,24 @@
 #include "../p03/pm.hpp"
 #include "buffon.hpp"
 
-void rng_test(std::unique_ptr<RNG> rng, unsigned int n, std::string out_name)
+void rng_test(RNG& rng, unsigned int n, std::string out_name)
 {
 	std::ofstream out_file{out_name};
 
 	for (int i = 0; i < n; ++i)
 		if (out_file.is_open())
-			out_file << rng->rand(-1.0, 1.0) << "\t" << rng->rand(-1.0, 1.0) << std::endl;
+			out_file << rng.rand(-1.0, 1.0) << "\t" << rng.rand(-1.0, 1.0) << std::endl;
 }
 
-void rng_test_small(std::unique_ptr<RNG> rng, unsigned int n, std::string out_name)
+void rng_test_small(RNG& rng, unsigned int n, std::string out_name)
 {
 	std::ofstream out_file{out_name};
 
 	double x, y;
 	for (int i = 0; i < n; ++i) {
 		do {
-			x = rng->rand(-1.0, 1.0);
-			y = rng->rand(-1.0, 1.0);
+			x = rng.rand(-1.0, 1.0);
+			y = rng.rand(-1.0, 1.0);
 		} while (fabs(x) > 0.01 || fabs(y) > 0.01);
 		if (out_file.is_open())
 			out_file << x << "\t" << y << std::endl;
@@ -49,16 +49,26 @@ int main(int argc, char *argv[])
 	}
 	std::clog << "Using seed " << seed << std::endl;
 
-	rng_test(std::unique_ptr<RNG>(new LCG(seed)), 100, "lcg_100.txt");
-	rng_test(std::unique_ptr<RNG>(new LCG(seed)), 10'000, "lcg_10000.txt");
-	rng_test(std::unique_ptr<RNG>(new PM(seed)), 100, "pm_100.txt");
-	rng_test(std::unique_ptr<RNG>(new PM(seed)), 10'000, "pm_10000.txt");
-	rng_test(std::unique_ptr<RNG>(new MT(seed)), 100, "mt_100.txt");
-	rng_test(std::unique_ptr<RNG>(new MT(seed)), 10'000, "mt_10000.txt");
+	LCG lcg{seed};
+	PM pm{seed};
+	MT mt{seed};
+	rng_test(lcg, 100, "lcg_100.txt");
+	rng_test(pm, 100, "pm_100.txt");
+	rng_test(mt, 100, "mt_100.txt");
 
-	rng_test_small(std::unique_ptr<RNG>(new LCG(seed)), 1000, "lcg_small_1000.txt");
-	rng_test_small(std::unique_ptr<RNG>(new PM(seed)), 1000, "pm_small_1000.txt");
-	rng_test_small(std::unique_ptr<RNG>(new MT(seed)), 1000, "mt_small_1000.txt");
+	lcg.seed(seed);
+	pm.seed(seed);
+	mt.seed(seed);
+	rng_test(lcg, 10'000, "lcg_10000.txt");
+	rng_test(pm, 10'000, "pm_10000.txt");
+	rng_test(mt, 10'000, "mt_10000.txt");
+
+	lcg.seed(seed);
+	pm.seed(seed);
+	mt.seed(seed);
+	rng_test_small(lcg, 1000, "lcg_small_1000.txt");
+	rng_test_small(pm, 1000, "pm_small_1000.txt");
+	rng_test_small(mt, 1000, "mt_small_1000.txt");
 
 	Buffon buffon(2, 10, new LCG(seed));
 	double average_error = 0.0;

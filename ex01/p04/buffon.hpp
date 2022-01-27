@@ -8,7 +8,7 @@
 
 class Buffon {
 public:
-	Buffon(double l, double d, RNG* rng) : l{l}, d{d}, rng{rng} {}
+	Buffon(double l, double d, RNG* rng) : l{l}, d{d}, rng{std::move(rng)} {}
 	void seed(std::uint_fast32_t seed);
 	double simulate(int n);
 private:
