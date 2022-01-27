@@ -1,3 +1,4 @@
+#include <cassert>
 #include <cmath>
 #include <fstream>
 #include <iostream>
@@ -23,8 +24,8 @@ void rng_test_small(std::unique_ptr<RNG> rng, unsigned int n, std::string out_na
 {
 	std::ofstream out_file{out_name};
 
+	double x, y;
 	for (int i = 0; i < n; ++i) {
-		double x, y;
 		do {
 			x = rng->rand(-1.0, 1.0);
 			y = rng->rand(-1.0, 1.0);
