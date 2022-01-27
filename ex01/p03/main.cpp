@@ -17,16 +17,13 @@ int main(int argc, char *argv[])
 	}
 	std::clog << "Using seed " << seed << std::endl;
 
-	LCG lcg;
-	lcg.seed(seed);
+	LCG lcg(seed);
 	std::cout << "LCG: " << lcg.rand() << std::endl;
 
-	PM pm;
-	pm.seed(seed);
+	PM pm(seed);
 	std::cout << "Park-Miller: " << pm.rand() << std::endl;
 
-	MT mt;
-	mt.seed(seed);
+	MT mt(seed);
 	std::cout << "Mersenne twister: " << mt.rand() << std::endl;
 
 	std::cout << std::endl;

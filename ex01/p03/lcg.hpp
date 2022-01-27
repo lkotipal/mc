@@ -4,12 +4,14 @@
 
 class LCG : public RNG {
 public:
+	LCG() : LCG(1) {}
+	LCG(std::uint_fast32_t seed);
 	void seed(std::uint_fast32_t seed);
 	bool has_seed(std::uint_fast32_t seed);
 	double rand();
 private:
 	std::uint_fast32_t rand_int();
-	std::uint_fast32_t state {1};
+	std::uint_fast32_t state;
 	static constexpr std::uint_fast32_t a {3'557'181};
 	static constexpr std::uint_fast32_t c {3};
 	static constexpr std::uint_fast32_t m {113'829'760};
@@ -17,6 +19,11 @@ private:
 	static constexpr std::int_fast32_t max {m - 1};
 	static constexpr double inv_max {inv_max(min, max)};
 };
+
+LCG::LCG(std::uint_fast32_t seed)
+{
+	this->seed(seed);
+}
 
 inline void LCG::seed(std::uint_fast32_t seed) 
 {
