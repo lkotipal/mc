@@ -7,7 +7,7 @@
 class Buffon {
 public:
 	Buffon(double l, double d) : l{l}, d{d}, x_dis{0.0, d/2.0} {}
-	void seed (std::uint_fast32_t seed) {rng.seed(seed);}
+	void seed(std::uint_fast32_t seed);
 	double simulate(unsigned int n);
 private:
 	bool needle_drop(); // Simulate single needle drop and return whether it falls on a line
@@ -15,7 +15,19 @@ private:
 	double d; // Line distance
 	std::uniform_real_distribution<double> x_dis;
 	std::uniform_real_distribution<double> phi_dis {0.0, std::numbers::pi/2};
-	std::mt19937 rng {};
+	std::mt19937 rng {1};
 };
+
+inline void Buffon::seed(std::uint_fast32_t seed) 
+{
+	rng.seed(seed);
+}
+
+inline bool Buffon::needle_drop()
+{
+	double x = this->x_dis(rng);
+	double phi = this->phi_dis(rng);
+	return x < l/2 * cos(phi);
+}
 
 #endif

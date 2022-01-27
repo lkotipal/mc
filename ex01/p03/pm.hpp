@@ -16,4 +16,31 @@ private:
 	static constexpr std::int_fast32_t r {m % a};
 };
 
+inline void PM::seed(std::uint_fast32_t seed) 
+{
+	seed %= m;
+	if (!seed)
+		++seed;
+	state = seed;
+}
+
+inline bool PM::has_seed(std::uint_fast32_t seed) 
+{
+	seed %= m;
+	if (!seed)
+		++seed;
+	return state == seed;
+}
+
+inline std::uint_fast32_t PM::rand_int() 
+{
+	// Schrage algorithm
+	int32_t k = state / q;
+	state = a * (state - k * q) - r * k;
+	if (state < 0)
+		state += m;
+
+	return state;
+}
+
 #endif

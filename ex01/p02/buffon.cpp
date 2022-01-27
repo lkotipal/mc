@@ -9,10 +9,3 @@ double Buffon::simulate(unsigned int n)
 			p += 1.0 / n;
 	return (2 * l) / (p * d);
 }
-
-bool Buffon::needle_drop()
-{
-	double x = this->x_dis(rng);
-	double phi = this->phi_dis(rng);
-	return x < l/2 * cos(phi);
-}

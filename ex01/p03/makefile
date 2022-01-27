@@ -1,12 +1,9 @@
 CC=g++
 CFLAGS=-std=c++20 -O
-OBJ=lcg.o pm.o mt.o
+SRC=rng.hpp lcg.hpp pm.hpp mt.hpp
 
-main: main.cpp $(OBJ)
-	$(CC) $(CFLAGS) -o rng.exe main.cpp $(OBJ)
-
-%.o: %.cpp %.hpp rng.hpp
-	$(CC) $(CFLAGS) -c -o $@ $<
+main: main.cpp $(SRC)
+	$(CC) $(CFLAGS) -o rng.exe main.cpp
 
 clean:
 	rm -f *.o *.exe

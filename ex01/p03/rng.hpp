@@ -1,7 +1,6 @@
 #ifndef RNG_H
 #define RNG_H
 #include <cstdint>
-#include <random>
 
 template <std::uint_fast32_t min, std::uint_fast32_t max>
 class RNG {
