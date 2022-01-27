@@ -17,7 +17,8 @@ inline double RNG::rand(double range_min, double range_max)
 
 static constexpr double inv_max(std::uint_fast32_t min, std::uint_fast32_t max)
 {
-	return 1.0 / (max - min);
+	// 1.0 non-inclusive
+	return 1.0 / (static_cast<std::uint_fast64_t>(max) - min + 1);
 }
 
 static inline double int_to_double(std::uint_fast32_t min, double inv_max, std::uint_fast32_t i)

@@ -1,3 +1,4 @@
+#include <cassert>
 #include <iostream>
 #include "lcg.hpp"
 #include "pm.hpp"
@@ -29,9 +30,11 @@ int main(int argc, char *argv[])
 	std::cout << std::endl;
 
 	lcg.seed(seed);
-	std::uint32_t i = 0;
-	do {
-		lcg.rand();
+	std::uint32_t i {0};
+	double rand {0.0};
+	do { 
+		rand = lcg.rand();
+		assert(rand >= 0.0 && rand < 1.0);
 		++i;
 	} while (!lcg.has_seed(seed));
 	std::cout << "LCG period length " << i << std::endl;
@@ -39,7 +42,8 @@ int main(int argc, char *argv[])
 	pm.seed(seed);
 	i = 0;
 	do {
-		pm.rand();
+		rand = pm.rand();
+		assert(rand >= 0.0 && rand < 1.0);
 		++i;
 	} while (!pm.has_seed(seed));
 	std::cout << "Park-Miller period length " << i << std::endl;
@@ -48,7 +52,8 @@ int main(int argc, char *argv[])
 	i = 0;
 	// The period length is 2^19937 so we should never reach it
 	do {
-		mt.rand();
+		rand = mt.rand();
+		assert(rand >= 0.0 && rand < 1.0);
 		++i;
 	} while (!mt.has_seed(seed) && i < std::numeric_limits<std::uint32_t>::max());
 	if (mt.has_seed(seed))
