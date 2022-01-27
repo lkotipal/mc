@@ -24,14 +24,11 @@ void rng_test_small(std::unique_ptr<RNG> rng, unsigned int n, std::string out_na
 	std::ofstream out_file{out_name};
 
 	for (int i = 0; i < n; ++i) {
-		double x;
+		double x, y;
 		do {
 			x = rng->rand(-1.0, 1.0);
-		} while (fabs(x) > 0.01);
-		double y;
-		do {
 			y = rng->rand(-1.0, 1.0);
-		} while (fabs(y) > 0.01);
+		} while (fabs(x) > 0.01 || fabs(y) > 0.01);
 		if (out_file.is_open())
 			out_file << x << "\t" << y << std::endl;
 	}
@@ -58,12 +55,9 @@ int main(int argc, char *argv[])
 	rng_test(std::unique_ptr<RNG>(new MT(seed)), 100, "mt_100.txt");
 	rng_test(std::unique_ptr<RNG>(new MT(seed)), 10'000, "mt_10000.txt");
 
-	rng_test_small(std::unique_ptr<RNG>(new LCG(seed)), 100, "lcg_small_100.txt");
-	rng_test_small(std::unique_ptr<RNG>(new LCG(seed)), 10'000, "lcg_small_10000.txt");
-	rng_test_small(std::unique_ptr<RNG>(new PM(seed)), 100, "pm_small_100.txt");
-	rng_test_small(std::unique_ptr<RNG>(new PM(seed)), 10'000, "pm_small_10000.txt");
-	rng_test_small(std::unique_ptr<RNG>(new MT(seed)), 100, "mt_small_100.txt");
-	rng_test_small(std::unique_ptr<RNG>(new MT(seed)), 10'000, "mt_small_10000.txt");
+	rng_test_small(std::unique_ptr<RNG>(new LCG(seed)), 1000, "lcg_small_1000.txt");
+	rng_test_small(std::unique_ptr<RNG>(new PM(seed)), 1000, "pm_small_1000.txt");
+	rng_test_small(std::unique_ptr<RNG>(new MT(seed)), 1000, "mt_small_1000.txt");
 
 	Buffon buffon(2, 10, new LCG(seed));
 	double average_error = 0.0;

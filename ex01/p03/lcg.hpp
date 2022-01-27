@@ -12,7 +12,7 @@ private:
 	std::uint_fast32_t rand_int();
 	std::uint_fast32_t state;
 	static constexpr std::uint_fast32_t a {3'557'181};
-	static constexpr std::uint_fast32_t c {3};
+	static constexpr std::uint_fast32_t c {1};
 	static constexpr std::uint_fast32_t m {113'829'760};
 	static constexpr std::int_fast32_t min {0};
 	static constexpr std::int_fast32_t max {m - 1};
