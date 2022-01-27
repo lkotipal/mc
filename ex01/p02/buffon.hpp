@@ -8,7 +8,7 @@ class Buffon {
 public:
 	Buffon(double l, double d) : l{l}, d{d}, x_dis{0.0, d/2.0} {}
 	void seed(std::uint_fast32_t seed);
-	double simulate(unsigned int n);
+	double simulate(int n);
 private:
 	bool needle_drop(); // Simulate single needle drop and return whether it falls on a line
 	double l; // Needle length

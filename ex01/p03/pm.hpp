@@ -4,7 +4,6 @@
 
 class PM : public RNG {
 public:
-	PM() : PM(1) {}
 	PM(std::uint_fast32_t seed);
 	void seed(std::uint_fast32_t seed);
 	bool has_seed(std::uint_fast32_t seed);
@@ -22,7 +21,7 @@ private:
 	static constexpr double inv_max {inv_max(min, max)};
 };
 
-PM::PM(std::uint_fast32_t seed)
+inline PM::PM(std::uint_fast32_t seed)
 {
 	this->seed(seed);
 }

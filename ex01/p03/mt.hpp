@@ -5,7 +5,6 @@
 
 class MT : public RNG {
 public:
-	MT() : MT(1) {}
 	MT(std::uint_fast32_t seed) : rng {seed} {}
 	void seed(std::uint_fast32_t seed);
 	bool has_seed(std::uint_fast32_t seed);

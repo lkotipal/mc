@@ -1,7 +1,7 @@
 #include "buffon.hpp"
 #include <cmath>
 
-double Buffon::simulate(unsigned int n) 
+double Buffon::simulate(int n) 
 {
 	double p = 0;
 	for (int i = 0; i < n; ++i)
