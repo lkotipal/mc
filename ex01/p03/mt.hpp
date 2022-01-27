@@ -8,7 +8,7 @@ public:
 	bool has_seed(std::uint_fast32_t seed);
 private:
 	std::uint_fast32_t rand_int();
-	std::mt19937 rng;
+	std::mt19937 rng {};
 };
 
 #endif

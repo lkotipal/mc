@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[]) 
 {
-	std::uint_fast32_t seed = 0;
+	std::uint_fast32_t seed = 1;
 	if (argc > 1) {
 		try {
 			seed = std::stoi(argv[1]);

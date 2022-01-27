@@ -9,11 +9,11 @@ public:
 private:
 	std::uint_fast32_t rand_int();
 	// Signed integers used for Schrage
-	std::int_fast32_t state;
-	static constexpr std::int_fast32_t a = 48'271;	// Revised constant used in minstd_rand
-	static constexpr std::int_fast32_t m = 2'147'483'647;
-	static constexpr std::int_fast32_t q = m / a;
-	static constexpr std::int_fast32_t r = m % a;
+	std::int_fast32_t state {1};
+	static constexpr std::int_fast32_t a {48'271};	// Revised constant used in minstd_rand
+	static constexpr std::int_fast32_t m {2'147'483'647};
+	static constexpr std::int_fast32_t q {m / a};
+	static constexpr std::int_fast32_t r {m % a};
 };
 
 #endif
