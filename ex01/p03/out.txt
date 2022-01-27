@@ -1,5 +1,5 @@
 LCG: 0.03125
-Park-Miller: 2.24775e-05
+Park-Miller: 7.8259e-06
 Mersenne twister: 0.417022
 
 LCG period length 113829760
