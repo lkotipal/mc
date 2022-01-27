@@ -2,8 +2,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.optimize import curve_fit
 
-n, sigma = np.loadtxt('out.txt', unpack=True)
-(a), _ = curve_fit(lambda x, a: a * x**(-1/2), n[1:], sigma[1:])
+n, sigma = np.loadtxt('buffon.txt', unpack=True)
+# Don't fit exponent, in MC error should be ~ 1/sqrt(N)
+(a), _ = curve_fit(lambda x, a: a * x**(-1/2), n[np.isfinite(sigma)], sigma[np.isfinite(sigma)])
 
 print((0.0001/a)**(-2))
 
