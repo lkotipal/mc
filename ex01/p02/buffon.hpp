@@ -25,7 +25,7 @@ inline void Buffon::seed(std::uint_fast32_t seed)
 
 inline bool Buffon::needle_drop()
 {
-	return this->x_dis(rng) < l/2 * cos(phi_dis(rng));
+	return x_dis(rng) < l/2 * cos(phi_dis(rng));
 }
 
 #endif

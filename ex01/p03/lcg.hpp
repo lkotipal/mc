@@ -20,12 +20,12 @@ private:
 
 inline void LCG::seed(std::uint_fast32_t seed) 
 {
-	this->state = seed % m;
+	state = seed % m;
 }
 
 inline bool LCG::has_seed(std::uint_fast32_t seed) 
 {
-	return this->state == seed % m;
+	return state == seed % m;
 }
 
 inline double LCG::rand()
@@ -36,7 +36,7 @@ inline double LCG::rand()
 inline std::uint_fast32_t LCG::rand_int() 
 {
 	// Upcast to avoid overflow
-	return this->state = (static_cast<std::uint_fast64_t>(a) * this->state + c) % m;
+	return state = (static_cast<std::uint_fast64_t>(a) * state + c) % m;
 }
 
 #endif
