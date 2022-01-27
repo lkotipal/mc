@@ -3,7 +3,7 @@ CFLAGS=-std=c++20 -O
 OBJ=lcg.o pm.o mt.o
 
 main: main.cpp $(OBJ)
-	$(CC) $(CFLAGS) -o main main.cpp $(OBJ)
+	$(CC) $(CFLAGS) -o rng.exe main.cpp $(OBJ)
 
 %.o: %.cpp %.hpp rng.hpp
 	$(CC) $(CFLAGS) -c -o $@ $<
