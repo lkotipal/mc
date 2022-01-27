@@ -6,7 +6,7 @@
 
 class Buffon {
 public:
-	Buffon(double l, double d) : l(l), d(d), x_dis(0.0, d/2.0), phi_dis(0.0, std::numbers::pi/2) {}
+	Buffon(double l, double d) : l{l}, d{d}, x_dis{0.0, d/2.0}, phi_dis{0.0, std::numbers::pi/2} {}
 	void seed (std::uint_fast32_t seed) {rng.seed(seed);}
 	double simulate(unsigned int n);
 private:
