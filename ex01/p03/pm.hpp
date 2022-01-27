@@ -2,10 +2,11 @@
 #define PM_H
 #include "rng.hpp"
 
-class PM : public RNG<1, 2'147'483'647 - 1> {
+class PM : public RNG {
 public:
 	void seed(std::uint_fast32_t seed);
 	bool has_seed(std::uint_fast32_t seed);
+	double rand();
 private:
 	std::uint_fast32_t rand_int();
 	// Signed integers used for Schrage
@@ -14,6 +15,9 @@ private:
 	static constexpr std::int_fast32_t m {2'147'483'647};
 	static constexpr std::int_fast32_t q {m / a};
 	static constexpr std::int_fast32_t r {m % a};
+	static constexpr std::int_fast32_t min {1};
+	static constexpr std::int_fast32_t max {m - 1};
+	static constexpr double inv_max {inv_max(min, max)};
 };
 
 inline void PM::seed(std::uint_fast32_t seed) 
@@ -30,6 +34,11 @@ inline bool PM::has_seed(std::uint_fast32_t seed)
 	if (!seed)
 		++seed;
 	return state == seed;
+}
+
+inline double PM::rand()
+{
+	return int_to_double(min, inv_max, rand_int());
 }
 
 inline std::uint_fast32_t PM::rand_int() 

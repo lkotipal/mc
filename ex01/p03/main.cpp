@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 
 	LCG lcg;
 	lcg.seed(seed);
-	std::cout << "LCG: " << lcg.rand() << std::endl;;
+	std::cout << "LCG: " << lcg.rand() << std::endl;
 
 	PM pm;
 	pm.seed(seed);
