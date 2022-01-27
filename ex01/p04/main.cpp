@@ -55,6 +55,7 @@ int main(int argc, char *argv[])
 	rng_test(lcg, 100, "lcg_100.txt");
 	rng_test(pm, 100, "pm_100.txt");
 	rng_test(mt, 100, "mt_100.txt");
+	std::clog << "Small tests done!" << std::endl;
 
 	lcg.seed(seed);
 	pm.seed(seed);
@@ -62,6 +63,7 @@ int main(int argc, char *argv[])
 	rng_test(lcg, 10'000, "lcg_10000.txt");
 	rng_test(pm, 10'000, "pm_10000.txt");
 	rng_test(mt, 10'000, "mt_10000.txt");
+	std::clog << "Large tests done!" << std::endl;
 
 	lcg.seed(seed);
 	pm.seed(seed);
@@ -69,6 +71,7 @@ int main(int argc, char *argv[])
 	rng_test_small(lcg, 1000, "lcg_small_1000.txt");
 	rng_test_small(pm, 1000, "pm_small_1000.txt");
 	rng_test_small(mt, 1000, "mt_small_1000.txt");
+	std::clog << "Limited tests done!" << std::endl;
 
 	Buffon buffon(2, 10, new LCG(seed));
 	double average_error = 0.0;
