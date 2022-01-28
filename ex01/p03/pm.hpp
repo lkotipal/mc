@@ -18,7 +18,6 @@ private:
 	static constexpr std::int_fast32_t r {m % a};
 	static constexpr std::int_fast32_t min {1};
 	static constexpr std::int_fast32_t max {m - 1};
-	static constexpr double inv_max {inv_max(min, max)};
 };
 
 inline PM::PM(std::uint_fast32_t seed)
@@ -44,7 +43,7 @@ inline bool PM::has_seed(std::uint_fast32_t seed)
 
 inline double PM::rand()
 {
-	return int_to_double(min, inv_max, rand_int());
+	return int_to_double(min, max, rand_int());
 }
 
 inline std::uint_fast32_t PM::rand_int() 

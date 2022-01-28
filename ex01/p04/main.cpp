@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 	lcg.seed(seed);
 	pm.seed(seed);
 	mt.seed(seed);
-	rng_test_small(lcg, 1000, "lcg_small_1000.txt");
+	rng_test_small(lcg, 1000, "lcg_small_1000.txt"); // Sometimes fails to halt since we pick two numbers at a time and m is even
 	rng_test_small(pm, 1000, "pm_small_1000.txt");
 	rng_test_small(mt, 1000, "mt_small_1000.txt");
 	std::clog << "Limited tests done!" << std::endl;

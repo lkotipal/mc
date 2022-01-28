@@ -14,7 +14,6 @@ private:
 	std::mt19937 rng;
 	static constexpr std::uint_fast32_t min {0};
 	static constexpr std::uint_fast32_t max {std::numeric_limits<uint32_t>::max()};
-	static constexpr double inv_max {inv_max(min, max)};
 };
 
 inline void MT::seed(std::uint_fast32_t seed) 
@@ -29,7 +28,7 @@ inline bool MT::has_seed(std::uint_fast32_t seed)
 
 inline double MT::rand()
 {
-	return int_to_double(min, inv_max, rand_int());
+	return int_to_double(min, max, rand_int());
 }
 
 inline std::uint_fast32_t MT::rand_int() 
