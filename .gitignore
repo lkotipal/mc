@@ -34,3 +34,4 @@
 # Binaries and config
 .vscode/
 *.png
+*.pdf
