@@ -1,0 +1,2 @@
+QCG: 2.79397e-09
+QCG period length 2147483648
