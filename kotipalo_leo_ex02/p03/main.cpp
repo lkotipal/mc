@@ -1,3 +1,4 @@
+#include <array>
 #include <cassert>
 #include <cmath>
 #include <fstream>
@@ -11,13 +12,24 @@
 #include "pm.hpp"
 #include "../p01/qcg.hpp"
 
-void rng_test(RNG& rng, unsigned int n, std::string out_name)
+void rng_test(RNG& rng, int tests, int points, std::string out_name)
 {
 	std::ofstream out_file{out_name};
 
-	for (int i = 0; i < n; ++i)
+	for (int i = 0; i < tests; ++i) {
+		constexpr int M = 100;
+		std::array<int, M> bins{};
+		for (int j = 0; j < points; ++j)
+			bins[static_cast<int>(rng.rand() * 100)] += 1;
+
+		double chi_squared = 0;
+		double m_i = static_cast<double>(points) / M;
+		for (int j : bins)
+			chi_squared += std::pow(j - m_i, 2)/m_i;
+
 		if (out_file.is_open())
-			out_file << rng.rand() << std::endl;
+			out_file << chi_squared << std::endl;
+	}
 }
 
 int main(int argc, char *argv[]) 
@@ -38,10 +50,12 @@ int main(int argc, char *argv[])
 	PM pm{seed};
 	MT mt{seed};
 	QCG qcg{seed};
-	rng_test(lcg, 1'000'000, "lcg.txt");
-	rng_test(pm, 1'000'000, "pm.txt");
-	rng_test(mt, 1'000'000, "mt.txt");
-	rng_test(qcg, 1'000'000, "qcg.txt");
+	constexpr int tests = 10'000;
+	constexpr int points = 1'000'000;
+	rng_test(lcg, tests, points, "lcg.txt");
+	rng_test(pm, tests, points, "pm.txt");
+	rng_test(mt, tests, points, "mt.txt");
+	rng_test(qcg, tests, points, "qcg.txt");
 
 	return 0;
 }

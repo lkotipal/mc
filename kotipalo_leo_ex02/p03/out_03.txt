@@ -1,0 +1,35 @@
+Expected mean for 100 bins is 99.0
+Expected median for 100 bins is 98.33413733447392
+
+lcg.txt
+Mean 1209894.009
+Median 1207600.0
+0.0 values below lower confidence interval at 0.1
+0.0 values below lower confidence interval at 0.05
+1.0 values above upper confidence interval at 0.1
+1.0 values above upper confidence interval at 0.05
+
+pm.txt
+Mean 98.86586035999999
+Median 97.9392
+0.1158 values below lower confidence interval at 0.1
+0.0557 values below lower confidence interval at 0.05
+0.1099 values above upper confidence interval at 0.1
+0.0576 values above upper confidence interval at 0.05
+
+mt.txt
+Mean 98.77059746
+Median 98.2102
+0.1017 values below lower confidence interval at 0.1
+0.0522 values below lower confidence interval at 0.05
+0.0956 values above upper confidence interval at 0.1
+0.0477 values above upper confidence interval at 0.05
+
+qcg.txt
+Mean 98.78573988
+Median 98.30189999999999
+0.1056 values below lower confidence interval at 0.1
+0.053 values below lower confidence interval at 0.05
+0.0938 values above upper confidence interval at 0.1
+0.0456 values above upper confidence interval at 0.05
+

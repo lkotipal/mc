@@ -8,8 +8,8 @@ public:
 	void seed(std::uint_fast32_t seed);
 	bool has_seed(std::uint_fast32_t seed);
 	double rand();
-private:
 	std::uint_fast32_t rand_int();
+private:
 	std::uint_fast32_t state;
 	static constexpr std::uint_fast32_t a {3'557'181};
 	static constexpr std::uint_fast32_t c {1};
