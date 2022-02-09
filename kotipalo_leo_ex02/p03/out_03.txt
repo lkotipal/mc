@@ -26,10 +26,10 @@ Median 98.2102
 0.0477 values above upper confidence interval at 0.05
 
 qcg.txt
-Mean 98.78573988
-Median 98.30189999999999
-0.1056 values below lower confidence interval at 0.1
-0.053 values below lower confidence interval at 0.05
-0.0938 values above upper confidence interval at 0.1
-0.0456 values above upper confidence interval at 0.05
+Mean 98.73584491999999
+Median 98.16
+0.1016 values below lower confidence interval at 0.1
+0.052 values below lower confidence interval at 0.05
+0.0907 values above upper confidence interval at 0.1
+0.0476 values above upper confidence interval at 0.05
 

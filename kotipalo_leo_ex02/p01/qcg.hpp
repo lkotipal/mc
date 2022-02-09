@@ -12,12 +12,11 @@ public:
 private:
 	std::uint_fast32_t rand_int();
 	std::uint_fast32_t state;
-	static constexpr std::uint_fast32_t a {2};
-	static constexpr std::uint_fast32_t b {3};
-	static constexpr std::uint_fast32_t c {1};
-	static constexpr std::uint_fast32_t m {0b1u << 31}; // 2^31
-	static constexpr std::uint_fast32_t min {0};
-	static constexpr std::uint_fast32_t max {m - 1};
+	static constexpr std::uint32_t a {2};
+	static constexpr std::uint32_t b {3};
+	static constexpr std::uint32_t c {1};
+	static constexpr std::uint32_t min {0};
+	static constexpr std::uint32_t max {std::numeric_limits<std::uint32_t>::max()};
 };
 
 inline QCG::QCG(std::uint_fast32_t seed)
@@ -27,12 +26,12 @@ inline QCG::QCG(std::uint_fast32_t seed)
 
 inline void QCG::seed(std::uint_fast32_t seed) 
 {
-	state = seed % m;
+	state = seed;
 }
 
 inline bool QCG::has_seed(std::uint_fast32_t seed) 
 {
-	return state == seed % m;
+	return state == seed;
 }
 
 inline double QCG::rand()
@@ -42,8 +41,8 @@ inline double QCG::rand()
 
 inline std::uint_fast32_t QCG::rand_int() 
 {
-	// Upcast to avoid overflow
-	return state = (static_cast<std::uint_fast64_t>(a) * state * state + b * state + c) % m;
+	// Overflow equivalent to taking % 2^32
+	return state = (a * state * state + b * state + c);
 }
 
 #endif

@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 	std::cout << "QCG: " << qcg.rand() << std::endl;
 
 	qcg.seed(seed);
-	std::uint32_t i {0};
+	std::uint64_t i {0};
 	double rand {0.0};
 	do { 
 		rand = qcg.rand();
