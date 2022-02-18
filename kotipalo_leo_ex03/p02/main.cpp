@@ -1,8 +1,6 @@
 #include <cmath>
 #include <iostream>
-#include <numbers>
-#include <string>
-#include "buffon.hpp"
+#include "sphere.hpp"
 
 int main(int argc, char *argv[]) 
 {
@@ -18,16 +16,16 @@ int main(int argc, char *argv[])
 	}
 	std::clog << "Using seed " << seed << std::endl;
 
-	Buffon buffon(2.0, 10.0);
-	buffon.seed(seed);
+	Sphere sphere(seed);
 
-	for (int n = 10; n <= 10'000'000; n *= 10) {
-		double average_error = 0.0;
-		for (int i = 0; i < 100; ++i) {
-			double pi_sim = buffon.simulate(n);
-			average_error += fabs(pi_sim - std::numbers::pi) / 100;
-		}
-		std::cout << n << "\t" << average_error << std::endl;
+	constexpr int n = 100'000'000;
+	std::cout << std::fixed;
+	for (int d = 1; d < 16; ++d) {
+		double p = sphere.simulate(d, n);
+		double err = std::sqrt((p - p*p) / n);
+		double V = pow(2, d);
+		std::cout << d << ":\t" << V * p << " +- " << V * err << std::endl;
 	}
+	
 	return 0;
 }

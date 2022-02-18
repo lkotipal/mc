@@ -1,0 +1,7 @@
+	DS		SS		HM		PSS		IS		
+N	D_I	t	D_I	t	D_I	t	D_I	t	D_I	t	
+100	2.8e-02  	0 ms	4.4e-04  	0 ms	1.3e-01  	0 ms	1.1e-03  	0 ms	
+1000	8.6e-02  	1 ms	1.2e-04  	0 ms	9.1e-02  	0 ms	1.5e-03  	0 ms	
+10000	8.3e-03  	1 ms	2.0e-06  	1 ms	9.8e-03  	1 ms	1.7e-04  	1 ms	
+100000	2.0e-03  	10 ms	9.1e-09  	9 ms	8.9e-03  	10 ms	2.4e-05  	10 ms	
+1000000	2.0e-03  	102 ms	6.7e-09  	86 ms	2.1e-03  	104 ms	6.8e-05  	95 ms	

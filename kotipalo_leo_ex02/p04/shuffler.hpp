@@ -35,10 +35,8 @@ inline void Shuffler::seed(std::uint_fast32_t seed)
 		lcg.rand();
 	
 	// Initialize array
-	for (int i : iv) {
-		iy = lcg.rand_int();
-		i = iy;
-	}
+	for (int i : iv)
+		i = iy = lcg.rand_int();
 	
 }
 
