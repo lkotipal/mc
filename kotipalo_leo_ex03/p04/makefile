@@ -1,8 +1,9 @@
 CC=g++
 CFLAGS=-std=c++20 -O2
-OBJS=vdc.o
+SRC=vdc.hpp
+OBJS=
 
-main: main.cpp vdc.o
+main: main.cpp $(SRC)
 	$(CC) $(CFLAGS) -o vdc.exe main.cpp $(OBJS)
 
 %.o: %.cpp %.hpp

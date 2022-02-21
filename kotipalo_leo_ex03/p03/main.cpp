@@ -65,8 +65,6 @@ int main(int argc, char *argv[])
 
 	// Data
 	for (int n = 100; n <= 1'000'000; n *= 10){
-		std::array<double, 4> results{};
-		std::array<double, 4> times{};
 		std::cout << std::setw(7) << n << "\t";
 		for (int i = 0; i < 5; ++i) {
 			auto start = std::clock();

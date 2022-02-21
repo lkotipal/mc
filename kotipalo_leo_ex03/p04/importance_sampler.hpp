@@ -1,17 +1,14 @@
 #ifndef IMPORTANCE_SAMPLER_HPP
 #define IMPORTANCE_SAMPLER_HPP
-#include <random>
-#include "Direct_sampler.hpp"
+#include "direct_sampler.hpp"
 
 class Importance_sampler : public Direct_sampler {
 	public:
-		Importance_sampler(const std::uint_fast32_t seed) : Direct_sampler{seed} {};
 		virtual double integrate(const int n);
 		static constexpr double g(const double x);
 	private:
 		static constexpr double lambda = 2;
 		double generate();
-		std::exponential_distribution<double> x{lambda};
 };
 
 inline double Importance_sampler::integrate(const int n)
@@ -30,8 +27,8 @@ inline constexpr double Importance_sampler::g(const double x)
 inline double Importance_sampler::generate()
 {
 	double x;
-	do 
-		x = this->x(rng);
+	do
+		x = -std::log(this->x.rand()) / lambda;
 	while (x > b);
 	return f(x) / g(x);
 }
