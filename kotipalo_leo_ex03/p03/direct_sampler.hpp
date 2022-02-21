@@ -19,8 +19,8 @@ inline double Direct_sampler::integrate(const int n)
 {
 	double sum = 0.0;
 	for (int i = 0; i < n; ++i)
-		sum += (b - a) / n * generate();
-	return sum;
+		sum += generate();
+	return (b - a) / n * sum;
 }
 
 inline void Direct_sampler::seed(std::uint_fast32_t seed)

@@ -22,7 +22,7 @@ inline double Stratified_sampler::integrate(const int n)
 
 inline void Stratified_sampler::set_bin(int i, int n)
 {
-	x.param(std::uniform_real_distribution<double>::param_type(a + (b - a) * i / n, a + (b - a) * (i + 1) / n));
+	x = std::uniform_real_distribution<double>(a + (b - a) * i / n, a + (b - a) * (i + 1) / n);
 }
 
 #endif

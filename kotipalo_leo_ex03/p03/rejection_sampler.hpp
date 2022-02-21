@@ -19,11 +19,11 @@ class Rejection_sampler : public Poisson_integrator {
 
 inline double Rejection_sampler::integrate(const int n)
 {
-	double p = 0.0;
+	int hits = 0;
 	for (int i = 0; i < n; ++i)
 		if (generate())
-			p += 1.0 / n;
-	return (b - a) * (y_max - y_min) * p;
+			++hits;
+	return (b - a) * (y_max - y_min) * hits / n;
 }
 
 inline void Rejection_sampler::seed(std::uint_fast32_t seed)

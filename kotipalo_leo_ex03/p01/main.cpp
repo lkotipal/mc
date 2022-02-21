@@ -1,4 +1,8 @@
+#include <cassert>
+#include <fstream>
 #include <iostream>
+#include "inversion_distribution.hpp"
+#include "sampling_distribution.hpp"
 
 int main(int argc, char *argv[]) 
 {
@@ -13,6 +17,25 @@ int main(int argc, char *argv[])
 		std::clog << "No seed given." << std::endl;
 	}
 	std::clog << "Using seed " << seed << std::endl;
+
+	Inversion_distribution id{seed};
+	Sampling_distribution sd{seed};
+
+	std::ofstream out_inversion{"inversion.txt"};
+	for (int i = 0; i < 1'000'000; ++i) {
+		double d = id.generate();
+		assert(d >= -10 && d <= 10);
+		if (out_inversion.is_open())
+			out_inversion << d << std::endl;
+	}
+
+	std::ofstream out_sampling{"sampling.txt"};
+	for (int i = 0; i < 1'000'000; ++i) {
+		double d = sd.generate();
+		assert(d >= -10 && d <= 10);
+		if (out_sampling.is_open())
+			out_sampling << d << std::endl;
+	}
 	
 	return 0;
 }

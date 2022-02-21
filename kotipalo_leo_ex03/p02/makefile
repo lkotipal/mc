@@ -1,6 +1,6 @@
 CC=g++
 CFLAGS=-std=c++20 -O2
-SRC=sphere.h
+SRC=sphere.hpp
 
 main: main.cpp $(SRC)
 	$(CC) $(CFLAGS) -o sphere.exe main.cpp
