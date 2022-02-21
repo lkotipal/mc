@@ -10,6 +10,7 @@
 #include "stratified_sampler.hpp"
 #include "rejection_sampler.hpp"
 #include "partially_stratified_sampler.hpp"
+#include "importance_sampler.hpp"
 
 inline constexpr double delta_i(const double i)
 {
@@ -43,11 +44,12 @@ int main(int argc, char *argv[])
 	}
 	std::clog << "Using seed " << seed << std::endl;
 
-	std::array<std::unique_ptr<Poisson_integrator>, 4> integrators{
+	std::array<std::unique_ptr<Poisson_integrator>, 5> integrators{
 		std::make_unique<Direct_sampler>(seed),
 		std::make_unique<Stratified_sampler>(seed),
 		std::make_unique<Rejection_sampler>(seed),
 		std::make_unique<Partially_stratified_sampler>(seed),
+		std::make_unique<Importance_sampler>(seed)
 	};
 	std::array<std::string, 5> names{"DS", "SS", "HM", "PSS", "IS"};
 
@@ -66,7 +68,7 @@ int main(int argc, char *argv[])
 		std::array<double, 4> results{};
 		std::array<double, 4> times{};
 		std::cout << std::setw(7) << n << "\t";
-		for (int i = 0; i < 4; ++i) {
+		for (int i = 0; i < 5; ++i) {
 			auto start = std::clock();
 			double result = integrators[i]->integrate(n);
 			auto stop = std::clock();
@@ -76,7 +78,7 @@ int main(int argc, char *argv[])
 		std::cout << std::endl;
 	}
 
-	for (int i = 0; i < 4; ++i) {
+	for (int i = 0; i < 5; ++i) {
 		integrators[i]->seed(seed);
 		write_values(integrators[i], names[i] + ".tsv");
 	}
