@@ -9,7 +9,7 @@ class Importance_sampler : public Direct_sampler {
 		virtual double integrate(const int n);
 		static constexpr double g(const double x);
 	private:
-		static constexpr double lambda = 2;
+		static constexpr double lambda = 1;
 		double generate();
 		std::exponential_distribution<double> x{lambda};
 };

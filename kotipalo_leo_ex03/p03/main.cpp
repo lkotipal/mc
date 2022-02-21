@@ -55,12 +55,18 @@ int main(int argc, char *argv[])
 
 	// Header
 	std::cout << "\t";
-	for (auto name : names)
-		std::cout << name << "\t\t";
+	for (int i = 0; i < 5; ++i) {
+		std::cout << names[i] << "\t";
+		if (i < 4)
+			std::cout << "\t";
+	}
 	std::cout << std::endl;
 	std::cout << "N\t";
-	for (int i = 0; i < 5; ++i)
-		std::cout << "D_I\tt\t";
+	for (int i = 0; i < 5; ++i) {
+		std::cout << "D_I\tt";
+		if (i < 4)
+			std::cout << "\t";
+	}
 	std::cout << std::endl;
 
 	// Data
@@ -71,14 +77,16 @@ int main(int argc, char *argv[])
 			double result = integrators[i]->integrate(n);
 			auto stop = std::clock();
 			double time = static_cast<double>(stop - start) / CLOCKS_PER_SEC * 1000;
-			std::cout << std::scientific << std::setprecision(1) << delta_i(result) << "\t" << std::defaultfloat << std::setprecision(6) << std::setw(3) << time << " ms\t";
+			std::cout << std::scientific << std::setprecision(1) << delta_i(result) << "\t" << std::defaultfloat << std::setprecision(6) << std::setw(3) << time << " ms";
+			if (i < 4)
+				std::cout << "\t";
 		}
 		std::cout << std::endl;
 	}
 
 	for (int i = 0; i < 5; ++i) {
 		integrators[i]->seed(seed);
-		write_values(integrators[i], names[i] + ".tsv");
+		write_values(integrators[i], names[i] + ".txt");
 	}
 	
 	return 0;
