@@ -1,0 +1,1 @@
+Optimal delta_max: 0.19
