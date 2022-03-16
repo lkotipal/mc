@@ -15,7 +15,7 @@ for i in ('discrete', 'poisson'):
 	print(f'Standard deviation {math.sqrt(var)}')
 	
 	plt.figure()
-	plt.hist(a, bins=math.ceil(math.log2(np.size(a))) + 1, density=True)
+	plt.hist(a, bins=math.ceil(math.log2(np.size(a))) + 1)
 	plt.xlabel(r'$\mu$')
 	plt.ylabel(r'$N$')
 	plt.savefig(f'{i}.png')

@@ -12,4 +12,4 @@ sand_pile.o: sand_pile.f90
 	$(CC) -c sand_pile.f90 $(CFLAGS)
 
 clean:
-	rm -f *.o *.exe
+	rm -f *.o *.exe *.mod
