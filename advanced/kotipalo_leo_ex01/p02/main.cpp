@@ -16,10 +16,24 @@ int main(int argc, char *argv[])
 	}
 	std::clog << "Using seed " << seed << std::endl;
 
-	constexpr int n_trials = 100'000;
-	Random_walker rw{0, 1, 2};
+	int l_1 = 1;
+	int l_2 = 2;
+	if (argc > 3) {
+		try {
+			l_1 = std::stoi(argv[2]);
+			l_2 = std::stoi(argv[3]);
+		} catch (std::invalid_argument e) {
+			std::clog << "Invalid step lengths given." << std::endl;
+		}
+	} else {
+		std::clog << "No step length given." << std::endl;
+	}
+	std::clog << "Using step lengths " << l_1 << ", " << l_2 << std::endl;
 
-	for (int n_steps = 1; n_steps <= 1'000'000; n_steps *= 10) {
+	constexpr int n_trials = 1'000;
+	Random_walker rw{0, l_1, l_2};
+
+	for (int n_steps = 1; n_steps <= 1'048'576; n_steps *= 2) {
 		double mean = 0;
 		double m_sq = 0;
 

@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
-(n, r_squared, sigma) = np.loadtxt('p01.tsv', unpack=True)
+(n, r_squared, sigma) = np.loadtxt('p02.tsv', unpack=True)
 
 (a, cov) = curve_fit(lambda x, a, b : a * x**b, xdata = n[1:], ydata = r_squared[1:], p0 = (1, 1), sigma = sigma[1:])
 perr = np.sqrt(np.diag(cov))
@@ -17,4 +17,4 @@ plt.yscale('log')
 plt.xlabel(r'$N$')
 plt.ylabel(r'$<r^2>$')
 plt.legend()
-plt.savefig('p01.png')
+plt.savefig('p02.png')

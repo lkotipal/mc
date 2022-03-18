@@ -12,8 +12,8 @@ class Random_walker {
 		std::mt19937 rng;
 		std::uniform_int_distribution<int> dir{0, 3};
 		std::uniform_int_distribution<int> len{0, 1};
-		int l_1;
-		int l_2;
+		const int l_1;
+		const int l_2;
 		int x;
 		int y;
 };

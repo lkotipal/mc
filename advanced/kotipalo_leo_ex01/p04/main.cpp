@@ -20,7 +20,8 @@ int main(int argc, char *argv[])
 	Self_avoiding_walker saw{0};
 
 	// For step size greater than 10000 double precision isn't enough for weights
-	for (int n_steps = 1; n_steps <= 8192; n_steps *= 2) {
+	//for (int n_steps = 1; n_steps <= 8192; n_steps *= 2) {
+	for (int n_steps = 1; n_steps <= 256; n_steps *= 2) {
 		double sum_r{0};
 		double sum_w{0};
 

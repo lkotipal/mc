@@ -1,1 +1,1 @@
-Average of medians: 452.35 +- 21.26852134023426
+Average of medians: 452.35 +- 16.998447641541336
