@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 		m_sq += (x - prev_mean) * (x - mean);
 	}
 
-	std::cout << 100 * mean << " +- " << 100 * std::sqrt(m_sq / (trials - 1)) / sqrt(trials) << " %" << std::endl;
+	std::cout << std::scientific << mean << " +- " << std::sqrt(m_sq / (trials - 1)) / sqrt(trials) << std::endl;
 
 	return 0;
 }

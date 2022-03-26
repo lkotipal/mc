@@ -3,69 +3,53 @@
 #include <array>
 #include <cmath>
 
-template <int D>
 class Point {
 	public:
-		Point(const std::array<double, D>& x) : x{x} {};
-		Point() : Point(std::array<double, D>{}) {};
-		Point(const double r, const std::array<double, D - 1>& phi);
+		Point(const std::array<double, 2>& x) : x{x} {}
+		Point(const double r, const double phi) : Point(std::array<double, 2> {r * std::cos(phi), r * std::sin(phi)}) {}
 		double norm() const;
-		Point<D> operator-() const;
+		double ang() const;
+		Point operator-() const;
 		double operator[](int idx) const;
 	private:
-		std::array<double, D> x;
+		std::array<double, 2> x;
 };
 
-template <int D>
-inline Point::Point(const double r, const std::array<double, D - 1>& phi)
-{
-	std::array<double, D> x{};
-	for (int i = 0; i < D; ++i)
-	{
-		x[i] = r;
-		for (int j = 0; j < i; ++j)
-			x[i] *= std::sin(phi[j]);
-		if (i < D - i)
-			x[i] *= std::cos(phi[j]);
-	}
-	return Point(x);
-}
-
-template <int D>
-inline double Point<D>::norm() const 
+inline double Point::norm() const 
 {
 	double norm{0.0};
 	for (double d : x)
-		norm += x * x;
-	return norm;
+		norm += d * d;
+	return std::sqrt(norm);
 }
 
-template <int D>
-inline double Point<D>::operator[](int idx) const
+inline double Point::ang() const
+{
+	return atan2(x[1], x[0]);
+}
+
+inline double Point::operator[](int idx) const
 {
 	return x[idx];
 }
 
-template <int D>
-inline Point<D> Point<D>::operator-() const
+inline Point Point::operator-() const
 {
-	std::array<double, D> x;
-	for (int i = 0; i < D; ++i)
-		x[i] = -(*this)[i];
-	return Point(x);
+	std::array<double, 2> new_x;
+	for (int i = 0; i < 2; ++i)
+		new_x[i] = -x[i];
+	return Point(new_x);
 }
 
-template <int D>
-inline Point<D> operator+(const Point<D>& p1, const Point<D>& p2)
+inline Point operator+(const Point& p1, const Point& p2)
 {
-	std::array<double, D> x;
-	for (int i = 0; i < D; ++i)
+	std::array<double, 2> x;
+	for (int i = 0; i < 2; ++i)
 		x[i] = p1[i] + p2[i];
 	return Point(x);
 }
 
-template <int D>
-inline Point<D> operator-(const Point<D>& p1, const Point<D>& p2)
+inline Point operator-(const Point& p1, const Point& p2)
 {
 	return p1 + -p2;
 }

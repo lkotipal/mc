@@ -1,6 +1,9 @@
+#include <array>
 #include <cmath>
 #include <iostream>
-//#include "../p02/scattering_simulator.hpp"
+#include <memory>
+#include "../p01/radiation_simulator.hpp"
+#include "../p02/scattering_simulator.hpp"
 #include "better_scattering_simulator.hpp"
 
 int main(int argc, char *argv[]) 
@@ -19,19 +22,32 @@ int main(int argc, char *argv[])
 
 	constexpr int trajectories{2000};
 	constexpr int trials{100};
-	Better_scattering_simulator bss{seed};
+	std::array<std::unique_ptr<Radiation_simulator>, 2> simulators {
+		std::make_unique<Scattering_simulator>(seed), 
+		std::make_unique<Better_scattering_simulator>(seed)
+	};
 
-	double mean{0};
-	double m_sq{0};
-	for (int i = 0; i < trials; ++i) {
-		double x =  bss.simulate(trajectories);
-		double prev_mean = mean;
+	std::cout << "N\tScattering\tStd. error\tOptimized\t Std. error" << std::endl;
+	for (int trajectories : {10, 20, 50, 40, 80, 100, 200, 500, 1000, 2000})
+	{
+		std::array<double, 2> means {0.0, 0.0};
+		std::array<double, 2> m_sqs {0.0, 0.0};
+		for (int sim = 0; sim < simulators.size(); ++sim) {
+			for (int i = 0; i < trials; ++i) {
+				double x =  simulators[sim]->simulate(trajectories);
+				double prev_mean = means[sim];
 
-		mean += (x - mean) / (i + 1);
-		m_sq += (x - prev_mean) * (x - mean);
+				means[sim] += (x - means[sim]) / (i + 1);
+				m_sqs[sim] += (x - prev_mean) * (x - means[sim]);
+			}
+		}
+
+		std::cout << trajectories;
+		for (int sim = 0; sim < simulators.size(); ++sim) {
+			std::cout << "\t" << std::scientific << means[sim] << "\t" << std::sqrt(m_sqs[sim] / (trials - 1) / sqrt(trials));
+		}
+		std::cout << std::endl;
 	}
-
-	std::cout << 100 * mean << " +- " << 100 * std::sqrt(m_sq / (trials - 1)) / sqrt(trials) << " %" << std::endl;
 
 	return 0;
 }
