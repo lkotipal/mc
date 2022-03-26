@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 	};
 
 	std::cout << "N\tScattering\tStd. error\tOptimized\t Std. error" << std::endl;
-	for (int trajectories : {10, 20, 50, 40, 80, 100, 200, 500, 1000, 2000})
+	for (int trajectories : {10, 20, 40, 50, 80, 100, 200, 500, 1000, 2000})
 	{
 		std::array<double, 2> means {0.0, 0.0};
 		std::array<double, 2> m_sqs {0.0, 0.0};
