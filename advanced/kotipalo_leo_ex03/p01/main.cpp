@@ -16,10 +16,61 @@ int main(int argc, char *argv[])
 	}
 	std::clog << "Using seed " << seed << std::endl;
 
-	Kinetic_mc kmc {seed, 2500};
+	constexpr double t_max {1E9};	// 1 us = 1E9 fs
+	constexpr int trials {3};
 
-	kmc.simulate(1E9);	// 1 us = 1E9 fs
-	std::cout << kmc.survival_ratio() << "\t" << kmc.jump_ratio() << std::endl;
+	std::cout << "T\tSurvival ratio\t\tJump ratio" << std::endl;
+	for (double T : {500.0, 1500.0, 2500.0}) {
+		Kinetic_mc kmc {seed, T};
+
+		double mean_survival{0};
+		double m_sq_survival{0};
+
+		double mean_jump_ratio{0};
+		double m_sq_jump_ratio{0};
+
+		for (int i = 0; i < trials; ++i) {
+			kmc.simulate(t_max);
+			double prev_mean_survival = mean_survival;
+			double prev_mean_jump_ratio = mean_jump_ratio;
+
+			mean_survival += (kmc.survival_ratio() - prev_mean_survival) / (i + 1);
+			m_sq_survival += (kmc.survival_ratio() - prev_mean_survival) * (kmc.survival_ratio() - mean_survival);
+
+			mean_jump_ratio += (kmc.jump_ratio() - prev_mean_jump_ratio) / (i + 1);
+			m_sq_jump_ratio += (kmc.jump_ratio() - prev_mean_jump_ratio) * (kmc.jump_ratio() - mean_jump_ratio);
+		}
+		std::cout << std::defaultfloat << T << std::fixed << "\t" ;
+		std::cout << mean_survival << " +- " << std::sqrt(m_sq_survival / (trials - 1)) / sqrt(trials) << "\t";
+		std::cout << mean_jump_ratio << " +- " << std::sqrt(m_sq_jump_ratio / (trials - 1)) / sqrt(trials) << std::endl;
+	}
+
+	double T {1500.0};
+	double r_recombine {10.0};
+	std::cout << std::endl << std::defaultfloat << "r_recombine = " << r_recombine << std::fixed << std::endl;
+
+	Kinetic_mc kmc {seed, T};
+
+	double mean_survival{0};
+	double m_sq_survival{0};
+
+	double mean_jump_ratio{0};
+	double m_sq_jump_ratio{0};
+
+	for (int i = 0; i < trials; ++i) {
+		kmc.simulate(t_max);
+		double prev_mean_survival = mean_survival;
+		double prev_mean_jump_ratio = mean_jump_ratio;
+
+		mean_survival += (kmc.survival_ratio() - prev_mean_survival) / (i + 1);
+		m_sq_survival += (kmc.survival_ratio() - prev_mean_survival) * (kmc.survival_ratio() - mean_survival);
+
+		mean_jump_ratio += (kmc.jump_ratio() - prev_mean_jump_ratio) / (i + 1);
+		m_sq_jump_ratio += (kmc.jump_ratio() - prev_mean_jump_ratio) * (kmc.jump_ratio() - mean_jump_ratio);
+	}
+	std::cout << std::defaultfloat << T << std::fixed << "\t" ;
+	std::cout << mean_survival << " +- " << std::sqrt(m_sq_survival / (trials - 1)) / sqrt(trials) << "\t";
+	std::cout << mean_jump_ratio << " +- " << std::sqrt(m_sq_jump_ratio / (trials - 1)) / sqrt(trials) << std::endl;
 
 	return 0;
 }

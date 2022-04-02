@@ -7,10 +7,11 @@
 
 class Kinetic_mc {
 	public:
-		Kinetic_mc(std::uint_fast32_t seed, double T) : rng {seed}, T {T}, Gamma_i {w_i * std::exp(-E_i / (k_B * T))}, Gamma_v {w_v * std::exp(-E_v / (k_B * T))} {initialize();}
-		void simulate(double t_end);
-		double survival_ratio() {return static_cast<double>(interstitials.size()) / initial_defects;}
-		double jump_ratio() {return static_cast<double>(interstitial_jumps) / vacancy_jumps;}
+		Kinetic_mc(std::uint_fast32_t seed, double T, double r_recombine) : rng {seed}, T {T}, Gamma_i {w_i * std::exp(-E_i / (k_B * T))}, Gamma_v {w_v * std::exp(-E_v / (k_B * T))}, r_recombine{r_recombine} {initialize();}
+		Kinetic_mc(std::uint_fast32_t seed, double T) : Kinetic_mc(seed, T, 4.0) {}
+		void simulate(double t_max);
+		double survival_ratio() const {return static_cast<double>(interstitials.size()) / initial_defects;}
+		double jump_ratio() const {return static_cast<double>(interstitial_jumps) / vacancy_jumps;}
 	private:
 		void initialize();
 		void recombine();
@@ -22,6 +23,7 @@ class Kinetic_mc {
 		static constexpr double E_i {1.37};	// eV
 		static constexpr double w_v {0.001282};	// 1/fs
 		static constexpr double E_v {0.1};	// eV
+		const double r_recombine;		// Å
 
 		static constexpr int initial_defects{150};
 		const double Gamma_i;
@@ -39,10 +41,10 @@ class Kinetic_mc {
 };
 
 
-inline void Kinetic_mc::simulate(double t_end)
+inline void Kinetic_mc::simulate(double t_max)
 {
 	initialize();
-	while (t < t_end) {
+	while (t < t_max) {
 		transition();
 	}
 }
@@ -79,7 +81,7 @@ inline void Kinetic_mc::transition()
 	Point delta = r_jump * random_point(rng);
 
 	// More generally should be weighed based on how many interstitials and vacancies there are but we always have the same amount here
-	if (u(rng) < Gamma_i / (* Gamma_i + * Gamma_v)) {
+	if (u(rng) < Gamma_i / (Gamma_i + Gamma_v)) {
 		interstitials[idx_to_move] = interstitials[idx_to_move] + delta;
 		++interstitial_jumps;
 	} else {
@@ -93,7 +95,6 @@ inline void Kinetic_mc::transition()
 
 inline void Kinetic_mc::recombine()
 {
-	constexpr double r_recombine {4.0};	// Å
 
 	auto i = interstitials.begin();
 	while (i != interstitials.end()) {
