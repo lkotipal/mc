@@ -55,23 +55,15 @@ int main(int argc, char *argv[])
 	double mean_survival{0};
 	double m_sq_survival{0};
 
-	double mean_jump_ratio{0};
-	double m_sq_jump_ratio{0};
-
 	for (int i = 0; i < trials; ++i) {
 		kmc.simulate(t_max);
 		double prev_mean_survival = mean_survival;
-		double prev_mean_jump_ratio = mean_jump_ratio;
 
 		mean_survival += (kmc.survival_ratio() - prev_mean_survival) / (i + 1);
 		m_sq_survival += (kmc.survival_ratio() - prev_mean_survival) * (kmc.survival_ratio() - mean_survival);
-
-		mean_jump_ratio += (kmc.jump_ratio() - prev_mean_jump_ratio) / (i + 1);
-		m_sq_jump_ratio += (kmc.jump_ratio() - prev_mean_jump_ratio) * (kmc.jump_ratio() - mean_jump_ratio);
 	}
 	std::cout << std::defaultfloat << T << std::fixed << "\t" ;
-	std::cout << mean_survival << " +- " << std::sqrt(m_sq_survival / (trials - 1)) / sqrt(trials) << "\t";
-	std::cout << mean_jump_ratio << " +- " << std::sqrt(m_sq_jump_ratio / (trials - 1)) / sqrt(trials) << std::endl;
+	std::cout << mean_survival << " +- " << std::sqrt(m_sq_survival / (trials - 1)) / sqrt(trials) << std::endl;
 
 	return 0;
 }
