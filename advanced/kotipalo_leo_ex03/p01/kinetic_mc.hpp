@@ -65,8 +65,8 @@ inline void Kinetic_mc::initialize()
 	std::normal_distribution<double> p_ri {0.0, r_i};
 
 	for (int i = 0; i < initial_defects; ++i) {
-		interstitials.push_back(p_ri(rng) * random_point(rng));
-		vacancies.push_back(p_rv(rng) * random_point(rng));
+		interstitials.push_back(p_ri(rng) * Point::random_point(rng));
+		vacancies.push_back(p_rv(rng) * Point::random_point(rng));
 	}
 
 	recombine();
@@ -78,7 +78,7 @@ inline void Kinetic_mc::transition()
 
 	std::uniform_int_distribution<int> p_idx {0, static_cast<int>(interstitials.size())};
 	int idx_to_move {p_idx(rng)};
-	Point delta = r_jump * random_point(rng);
+	Point delta = r_jump * Point::random_point(rng);
 
 	// More generally should be weighed based on how many interstitials and vacancies there are but we always have the same amount here
 	if (u(rng) < Gamma_i / (Gamma_i + Gamma_v)) {

@@ -1,6 +1,7 @@
 #include <cmath>
 #include <iostream>
 #include "kinetic_mc.hpp"
+#include "point.hpp"
 
 int main(int argc, char *argv[]) 
 {
@@ -49,7 +50,7 @@ int main(int argc, char *argv[])
 	double r_recombine {10.0};
 	std::cout << std::endl << std::defaultfloat << "r_recombine = " << r_recombine << std::fixed << std::endl;
 
-	Kinetic_mc kmc {seed, T};
+	Kinetic_mc kmc {seed, T, r_recombine};
 
 	double mean_survival{0};
 	double m_sq_survival{0};

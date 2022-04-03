@@ -11,8 +11,12 @@ class Point {
 		double norm() const {return std::sqrt(x[0] * x[0] + x[1] * x[1] + x[2] * x[2]);}
 		Point operator-() const {return Point(std::array<double, 3> {-x[0], -x[1], -x[2]});}
 		double operator[](int idx) const {return x[idx];}
+
+		template<typename RNG>
+		static Point random_point(RNG& rng);
 	private:
 		std::array<double, 3> x;
+		inline static std::normal_distribution<double> dis;
 };
 
 inline Point operator+(const Point& p1, const Point& p2)
@@ -41,11 +45,10 @@ inline Point operator/(const Point& p, const double r)
 }
 
 template<typename RNG>
-inline Point random_point(RNG& rng)
+inline Point Point::random_point(RNG& rng)
 {
 	//std::uniform_real_distribution<double> x {-1.0, 1.0};
-	std::normal_distribution<double> x;
-	Point p(std::array<double, 3> {x(rng), x(rng), x(rng)});
+	Point p(std::array<double, 3> {Point::dis(rng), Point::dis(rng), Point::dis(rng)});
 	//do {
 	//	p = Point(std::array<double, 3> {x(rng), x(rng), x(rng)});
 	//} while (p.norm() > 1.0);
