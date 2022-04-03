@@ -1,5 +1,6 @@
 #ifndef KINETIC_MC_HPP
 #define KINETIC_MC_HPP
+#include <algorithm>
 #include <cmath>
 #include <random>
 #include <vector>
@@ -14,7 +15,7 @@ class Kinetic_mc {
 		double jump_ratio() const {return static_cast<double>(interstitial_jumps) / vacancy_jumps;}
 	private:
 		void initialize();
-		void recombine();
+		std::function<bool (Point&)> recombine(Point& p1);
 		void transition();
 
 		static constexpr double pi {M_PI};
@@ -66,56 +67,51 @@ inline void Kinetic_mc::initialize()
 
 	for (int i = 0; i < initial_defects; ++i) {
 		interstitials.push_back(p_ri(rng) * Point::random_point(rng));
-		vacancies.push_back(p_rv(rng) * Point::random_point(rng));
 	}
 
-	recombine();
+	for (int i = 0; i < initial_defects; ++i) {
+		Point v = p_rv(rng) * Point::random_point(rng);
+		auto it = std::find_if(interstitials.begin(), interstitials.end(), recombine(v));
+		if (it < interstitials.end())
+			interstitials.erase(it);
+		else
+			vacancies.push_back(v);
+	}
+}
+
+std::function<bool (Point&)> Kinetic_mc::recombine(Point& p1)
+{
+	return [p1, this](Point& p2){return (p1 - p2).norm() < r_recombine;};
 }
 
 inline void Kinetic_mc::transition()
 {
 	constexpr double r_jump {2.35};	// Å
 
-	std::uniform_int_distribution<int> p_idx {0, static_cast<int>(interstitials.size())};
+	std::uniform_int_distribution<int> p_idx {0, static_cast<int>(interstitials.size()) - 1};
 	int idx_to_move {p_idx(rng)};
 	Point delta = r_jump * Point::random_point(rng);
 
+	t += -std::log(u(rng)) / (interstitials.size() * Gamma_i + vacancies.size() * Gamma_v);
+
 	// More generally should be weighed based on how many interstitials and vacancies there are but we always have the same amount here
+	std::vector<Point>* to_move = nullptr;
+	std::vector<Point>* to_check = nullptr;
 	if (u(rng) < Gamma_i / (Gamma_i + Gamma_v)) {
-		interstitials[idx_to_move] = interstitials[idx_to_move] + delta;
+		to_move = &interstitials;
+		to_check = &vacancies;
 		++interstitial_jumps;
 	} else {
-		vacancies[idx_to_move] = vacancies[idx_to_move] + delta;
+		to_move = &vacancies;
+		to_check = &interstitials;
 		++vacancy_jumps;
 	}
 
-	t += -std::log(u(rng)) / (interstitials.size() * Gamma_i + vacancies.size() * Gamma_v);
-	recombine();
-}
-
-inline void Kinetic_mc::recombine()
-{
-
-	auto i = interstitials.begin();
-	while (i != interstitials.end()) {
-		bool recombine {false};
-
-		auto v = vacancies.begin();
-		while (v != vacancies.end()) {
-			if ((*i - *v).norm() < r_recombine) {
-				v = vacancies.erase(v);
-				recombine = true;
-				break;
-			} else {
-				++v;
-			}
-		}
-
-		if (recombine) {
-			i = interstitials.erase(i);
-		} else {
-			++i;
-		}
+	(*to_move)[idx_to_move] = (*to_move)[idx_to_move] + delta;
+	auto it = std::find_if(to_check->begin(), to_check->end(), recombine((*to_move)[idx_to_move]));
+	if (it < to_check->end()) {
+		to_move->erase(to_move->begin() + idx_to_move);
+		to_check->erase(it);
 	}
 }
 
