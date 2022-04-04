@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 	std::clog << "Using seed " << seed << std::endl;
 
 	constexpr double t_max {1E9};	// 1 us = 1E9 fs
-	constexpr int trials {3};
+	constexpr int trials {100};
 
 	std::cout << "T\tSurvival ratio\t\tJump ratio" << std::endl;
 	for (double T : {500.0, 1500.0, 2500.0}) {
@@ -31,6 +31,7 @@ int main(int argc, char *argv[])
 		double m_sq_jump_ratio{0};
 
 		for (int i = 0; i < trials; ++i) {
+			std::clog << T << "\t" << i << std::endl;
 			kmc.simulate(t_max);
 			double prev_mean_survival = mean_survival;
 			double prev_mean_jump_ratio = mean_jump_ratio;

@@ -6,65 +6,11 @@ Compilation:
 	make
 
 Run:
-	./walker.exe SEED
+	./kmc.exe SEED
 	SEED is the seed used, default 1
 
-The output format is:
-	p +- sigma
+The output is a table of results with standard errors for a hundred 1 us runs with different temperatures, and the survival ratio for a run with 10 Å recombination radius.
+Progress is printed in stderr output, so be sure to redirect either output stream for more readable output.
 
-Example output in p01/p01.txt, generated with:
-	./walker.exe > p01.txt
-
-Problem 2
----------
-Code in p02/
-
-Compilation:
-	make
-
-Run:
-	./walker.exe SEED
-	SEED is the seed used, default 1
-
-The output format is:
-	p +- sigma
-
-Example output in p02.txt, generated with:
-	./walker.exe > p02.txt
-
-Problem 3
----------
-Code in p03/
-
-Compilation:
-	make
-
-Run:
-	./walker.exe SEED
-	SEED is the seed used, default 1
-
-Mean probabilities and standard errors are generated with:
-	./walker.exe > p03.tsv
-
-Then, analysis and plotting are done with:
-	./p03.py > p03.txt
-	
-Where a1 and b1 correspond to the coefficients in a * x^b for the algorithm used in Problem 2, 
-and a2 and b2 to the optimized version.
-
-Problem 4
----------
-Code in p04/
-
-Compilation:
-	make
-
-Run:
-	./walker.exe SEED
-	SEED is the seed used, default 1
-
-The output format is:
-	p +- sigma
-
-Example output in p04.txt, generated with:
-	./walker.exe > p04.txt
+Example output in p01/out_01.txt, generated with:
+	./kmc.exe > out_01.txt
