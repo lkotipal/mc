@@ -47,11 +47,7 @@ inline Point operator/(const Point& p, const double r)
 template<typename RNG>
 inline Point Point::random_point(RNG& rng)
 {
-	//std::uniform_real_distribution<double> x {-1.0, 1.0};
 	Point p(std::array<double, 3> {Point::dis(rng), Point::dis(rng), Point::dis(rng)});
-	//do {
-	//	p = Point(std::array<double, 3> {x(rng), x(rng), x(rng)});
-	//} while (p.norm() > 1.0);
 	return p / p.norm();
 }
 
