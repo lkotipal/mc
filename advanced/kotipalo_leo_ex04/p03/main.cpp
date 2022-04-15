@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 	constexpr int N {500};
 	constexpr int n {1000};
 
-	std::cout << "T\tE_1\tE_2\tE_3" << std::endl;
+	std::cout << "T\tE_1\tE_2\tE_3\tAve" << std::endl;
 
 	std::array<double, 3> temps {300, 2'000, 10'000};
 	std::array<std::string, 3> names {"300.tsv", "2000.tsv", "10000.tsv"};
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 					v_total[l] += s[l];
 			}
 		}
-		std::cout << T << "\t" << means[0] << "\t" << means[1] << "\t" << means[2] << std::endl;
+		std::cout << T << "\t" << means[0] << "\t" << means[1] << "\t" << means[2] << "\t" << (means[0] + means[1] + means[2])/3 << std::endl;
 
 		std::ofstream f;
 		f.open(names[i]);

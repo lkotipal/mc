@@ -1,0 +1,50 @@
+Problem 1
+---------
+Code in p01/
+
+Compilation:
+	make
+
+Run:
+	./state.exe SEED
+	SEED is the seed used, default 1
+
+The output is the mean of 20 random states with standard error of the mean.
+
+Example output in p01/out_01.txt, generated with:
+	./state.exe > out_01.txt
+
+Problem 2
+---------
+Code in p02/
+
+Compilation:
+	make
+
+Run:
+	./state.exe SEED
+	SEED is the seed used, default 1
+
+The function requested is State::swap(RNG), located in p01/state.hpp.
+This program is simply a demonstration of the function; it should output the same N twice, along with different energies.
+
+Example output in p02/out_02.txt, generated with:
+	./state.exe > out_02.txt
+
+Problem 3
+---------
+Code in p01/
+
+Compilation:
+	make
+
+Run:
+	./state.exe SEED
+	SEED is the seed used, default 1
+
+The output is a table of three million-state averages of energies along with their mean, for each temperature.
+In addition, the average state is output into T.tsv, where T is the temperature.
+This state is then plotted with Python3 using p03.py.
+
+Example output in p03/out_03.txt, generated with:
+	./state.exe > out_03.txt
