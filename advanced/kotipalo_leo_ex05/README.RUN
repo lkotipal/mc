@@ -1,0 +1,16 @@
+Problem 1
+---------
+Code in p01/
+
+Compilation:
+	make
+
+Run:
+	./kmc.exe SEED
+	SEED is the seed used, default 1
+
+The output is a table of results with standard errors for a hundred 1 us runs with different temperatures, and the survival ratio for a run with 10 Å recombination radius.
+Progress is printed in stderr output, so be sure to redirect either output stream for more readable output.
+
+Example output in p01/out_01.txt, generated with:
+	./kmc.exe > out_01.txt
