@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 	std::mt19937 rng {seed};
 	std::uniform_real_distribution<double> u {0, 1};
 	std::uniform_real_distribution<double> theta {0, 2 * M_PI};
-	constexpr int trials {1'000};
+	constexpr int trials {100};
 
 	std::vector<Point> square_points;
 	for (int i = 0; i < 20; ++i)

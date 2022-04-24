@@ -44,9 +44,10 @@ template <typename RNG>
 inline double Salesman::simulate(RNG& rng)
 {
     double T {T_0};
-    while (T > T_0 * 1E-9) {
+    int n = 1'000'000;
+    for (int i = 0; i < n - 1; ++i) {
         anneal(rng, T);
-        T *= (1 - 1E-3);
+        T -= T_0 / n;
     }
     return f();
 }
